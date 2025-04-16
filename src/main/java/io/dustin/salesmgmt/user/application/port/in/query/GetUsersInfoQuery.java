@@ -6,12 +6,12 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-public class GetUserInfoQuery {
+public class GetUsersInfoQuery {
 
     @NotNull(message = "부서명은 필수입니다.")
     private final String select;
 
-    public GetUserInfoQuery(
+    public GetUsersInfoQuery(
             String select
     ) {
         this.select = select;
