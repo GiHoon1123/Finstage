@@ -11,5 +11,9 @@ public class User {
     private final String email;
     private final String departmentName;
 
+    public  static User of(String displayName, String email, String departmentName) {
+        return new User(displayName,email,departmentName);
+    }
+
 
 }
