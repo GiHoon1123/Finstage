@@ -3,6 +3,7 @@ plugins {
 	id 'org.springframework.boot' version '3.3.5'
 	id 'io.spring.dependency-management' version '1.1.6'
 	id 'jacoco'
+	id 'com.github.kt3k.coveralls' version '2.12.2' // 이 플러그인 커버리지 콘솔에 출력 가능
 }
 
 group = 'io.dustin'
@@ -56,9 +57,33 @@ jacocoTestReport {
 	// ./gradlew clean test jacocoTestReport <- 테스트를 초기화하고 새로 테스트를 진행 후 리포트를 작성함
 	reports {
 		html.required.set(true)     // HTML 보고서
-		xml.required.set(false)     // XML 보고서 필요시 true
-		csv.required.set(false)     // CSV 보고서 필요시 true
+		xml.required = true
+		csv.required.set(true)     // CSV 보고서 필요시 true
 	}
+	doLast {
+		def rawXml = new File("${buildDir}/reports/jacoco/test/jacocoTestReport.xml").text
+
+		// DOCTYPE 제거
+		rawXml = rawXml.replaceAll(/<!DOCTYPE[^>]+>/, "")
+
+		def parser = new XmlSlurper()
+		def report = parser.parseText(rawXml)
+
+		def totalMissed = 0
+		def totalCovered = 0
+
+		report.counter.each {
+			totalMissed += it.@missed.toInteger()
+			totalCovered += it.@covered.toInteger()
+		}
+
+		def total = totalMissed + totalCovered
+		def percentage = total > 0 ? (100 * totalCovered / total).round(2) : 0
+
+		println "\n🧪 총 테스트 커버리지: ${percentage}% (커버된 줄 수: ${totalCovered}, 전체: ${total})"
+	}
+
+
 }
 
 
