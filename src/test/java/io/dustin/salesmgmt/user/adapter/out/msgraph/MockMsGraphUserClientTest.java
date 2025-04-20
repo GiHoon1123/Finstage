@@ -3,6 +3,7 @@ package io.dustin.salesmgmt.user.adapter.out.msgraph;
 
 import io.dustin.salesmgmt.user.adpater.out.msgraph.MockMsGraphUserClient;
 import io.dustin.salesmgmt.user.application.dto.MsGraphUserInfo;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.stereotype.Component;
 
@@ -18,6 +19,7 @@ public class MockMsGraphUserClientTest {
     private final MockMsGraphUserClient client = new  MockMsGraphUserClient();
 
     @Test
+    @DisplayName("모킹된 모든 데이터가 정상적으로 리턴되는지 확인한다.")
     void shouldReturnAllDepartmentFromMockJson(){
         // when
         List<MsGraphUserInfo> department = client.getAllDepartments();
@@ -29,6 +31,7 @@ public class MockMsGraphUserClientTest {
     }
 
     @Test
+    @DisplayName("특정 부서를 입력했을 때 해당하는 값이 오는지 확인한다.")
     void ShouldReturnOnlySelectedDepartments(){
         // given
         List<String> filter = List.of("Development Team", "Finance Team");
@@ -45,6 +48,7 @@ public class MockMsGraphUserClientTest {
 
 
     @Test
+    @DisplayName("유효하지 않은 부서를 입력했을 때 빈 값이 오는지 확인한다.")
     void shouldReturnEmptyListWhenDepartmentDoesNotExist(){
         // given
         List<String> filter = List.of("Unknown Department");
