@@ -1,7 +1,5 @@
 package io.dustin.salesmgmt.user.adapter.out.msgraph;
 
-import io.dustin.salesmgmt.user.adpater.out.msgraph.LoadUsersInfoFromMsGraphAdapter;
-import io.dustin.salesmgmt.user.adpater.out.msgraph.MockMsGraphUserClient;
 import io.dustin.salesmgmt.user.application.dto.MsGraphUserInfo;
 import static org.assertj.core.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
