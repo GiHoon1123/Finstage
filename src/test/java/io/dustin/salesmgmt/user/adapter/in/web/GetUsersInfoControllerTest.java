@@ -1,6 +1,5 @@
 package io.dustin.salesmgmt.user.adapter.in.web;
 
-import io.dustin.salesmgmt.user.adpater.in.web.GetUsersInfoController;
 import io.dustin.salesmgmt.user.application.port.in.GetUsersInfoUseCase;
 import io.dustin.salesmgmt.user.domain.User;
 import org.junit.jupiter.api.DisplayName;

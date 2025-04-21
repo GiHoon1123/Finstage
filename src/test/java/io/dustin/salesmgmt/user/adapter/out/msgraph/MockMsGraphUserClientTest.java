@@ -1,7 +1,6 @@
 package io.dustin.salesmgmt.user.adapter.out.msgraph;
 
 
-import io.dustin.salesmgmt.user.adpater.out.msgraph.MockMsGraphUserClient;
 import io.dustin.salesmgmt.user.application.dto.MsGraphUserInfo;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
