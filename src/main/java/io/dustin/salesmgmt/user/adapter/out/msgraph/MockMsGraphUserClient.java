@@ -1,4 +1,4 @@
-package io.dustin.salesmgmt.user.adpater.out.msgraph;
+package io.dustin.salesmgmt.user.adapter.out.msgraph;
 
 
 import com.fasterxml.jackson.core.type.TypeReference;
