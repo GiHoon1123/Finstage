@@ -1,4 +1,4 @@
-package io.dustin.salesmgmt.user.adpater.out.msgraph;
+package io.dustin.salesmgmt.user.adapter.out.msgraph;
 
 import io.dustin.salesmgmt.common.annotation.GraphApiAdapter;
 import io.dustin.salesmgmt.user.application.dto.MsGraphUserInfo;

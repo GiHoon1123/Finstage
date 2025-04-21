@@ -1,4 +1,4 @@
-package io.dustin.salesmgmt.user.adpater.in.web;
+package io.dustin.salesmgmt.user.adapter.in.web;
 
 import io.dustin.salesmgmt.common.annotation.WebAdapter;
 import io.dustin.salesmgmt.common.response.CommonResponse;
