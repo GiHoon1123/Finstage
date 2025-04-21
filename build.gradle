@@ -98,7 +98,7 @@ jacocoTestCoverageVerification {
 			limit {
 				counter = 'LINE'
  value = 'COVEREDRATIO'
-				minimum = 0.001 // 💥 80% 미만이면 빌드 실패
+				minimum = 0.99 //
 			}
 		}
 	}
