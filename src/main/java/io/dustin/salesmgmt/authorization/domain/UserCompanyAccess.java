@@ -17,6 +17,7 @@ public class UserCompanyAccess {
     private final List<Company> companyAccess;
 
     public  static UserCompanyAccess of(String userName, String userEmail, List<Company> companyAccess) {
+        validateNoDuplicateCompanies(companyAccess);
         return new UserCompanyAccess(userName,userEmail,companyAccess);
     }
 
@@ -27,7 +28,7 @@ public class UserCompanyAccess {
         return new UserCompanyAccess(this.userName, this.userEmail, newAccess);
     }
 
-    private void validateNoDuplicateCompanies(List<Company> companies) {
+    private static void validateNoDuplicateCompanies(List<Company> companies) {
         Map<Long, List<Company>> grouped = companies.stream()
                 .collect(Collectors.groupingBy(Company::getCompanyId));
 
