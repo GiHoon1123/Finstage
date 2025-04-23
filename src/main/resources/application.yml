@@ -1,6 +1,5 @@
 spring:
   application:
     name: salesmgmt
-
   profiles:
-    active: dev
+    active: ${SPRING_PROFILES_ACTIVE:dev} # 환경변수 없으면 dev
