@@ -17,10 +17,12 @@ public class Role {
     private final List<Permission> permissions;
 
     public static Role of(String roleName, List<Permission> permissions) {
+        validatePermissions(permissions);
         return new Role(roleName,permissions);
     }
 
     public Role updatePermissions(List<Permission> newPermissions) {
+        validatePermissions(newPermissions);
         return new Role(this.roleName, newPermissions);
     }
 
