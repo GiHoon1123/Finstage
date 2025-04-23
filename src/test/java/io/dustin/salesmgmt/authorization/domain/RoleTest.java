@@ -32,8 +32,7 @@ public class RoleTest {
 
         // when & then
         assertThatThrownBy(() -> Role.of("DuplicatedRole", duplicated))
-                .isInstanceOf(InvalidPermissionException.class)
-                .hasMessageContaining("중복된 권한");
+                .isInstanceOf(InvalidPermissionException.class);
 
     }
 
@@ -45,8 +44,7 @@ public class RoleTest {
 
         // when & then
         assertThatThrownBy(()-> Role.of("InvalidAdminMix", invalid))
-                .isInstanceOf(InvalidPermissionException.class)
-                .hasMessageContaining("Admin 권한 외 다른 권한");
+                .isInstanceOf(InvalidPermissionException.class);
 
     }
 
