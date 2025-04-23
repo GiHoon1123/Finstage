@@ -2,7 +2,7 @@ name: Test and Coverage Check
 
 on:
   pull_request:
-    branches: [ main ]  # PR 대상 브랜치
+    branches: [ main ]
 
 jobs:
   test:
@@ -21,5 +21,13 @@ jobs:
       - name: Grant execute permission to gradlew
         run: chmod +x gradlew
 
+      - name: Debug - Print available yml files
+        run: |
+          ls -al src/main/resources
+          cat src/main/resources/application-test.yml || echo "❌ application-test.yml 없음"
+
+      - name: Set SPRING_PROFILES_ACTIVE
+        run: echo "SPRING_PROFILES_ACTIVE=test" >> $GITHUB_ENV
+
       - name: Run Tests with Coverage
-        run: ./gradlew clean test jacocoTestReport jacocoTestCoverageVerification -Dspring.profiles.active=test
+        run: ./gradlew clean test jacocoTestReport jacocoTestCoverageVerification
