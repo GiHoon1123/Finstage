@@ -1,6 +1,8 @@
 spring:
   application:
     name: salesmgmt
+  config:
+    import: optional:properties/env-dev.properties
 
   datasource:
     url: jdbc:mysql://${DB_HOST}:${DB_PORT}/${DB_NAME}
@@ -13,9 +15,9 @@ spring:
       ddl-auto: update
     show-sql: true
 
-  slack:
-    webhook:
-      url: https://hooks.slack.com/services/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
+slack:
+  webhook:
+    url: ${SLACK_URL}
 
 springdoc:
   api-docs:
