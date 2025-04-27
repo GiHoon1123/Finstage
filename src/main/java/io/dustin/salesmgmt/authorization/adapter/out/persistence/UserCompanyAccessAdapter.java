@@ -9,7 +9,7 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @PersistenceAdapter
-public class UserCompanyAccessAdapter implements RegisterUserCompanyAccessPort {
+public class UserCompanyAccessAdapter implements RegisterUserCompanyAccessPort, LoadUserCompanyAccessPort {
     private final UserCompanyAccessMapper mapper;
     private final SpringDataUserCompanyAccessRepository repository;
 
@@ -18,5 +18,16 @@ public class UserCompanyAccessAdapter implements RegisterUserCompanyAccessPort {
 
         List<UserCompanyAccessJpaEntity> entities = mapper.mapToJpaEntities(userCompanyAccess);
         repository.saveAll(entities);
+    }
+
+    @Override
+    public UserCompanyAccess findExistingCompanyAccesses(String userName, String userEmail, List<Long> companyIds) {
+        List<UserCompanyAccessJpaEntity> entities = repository.findByUserEmailAndCompanyIdIn(userEmail, companyIds);
+        return mapper.mapToDomainEntity(userName, userEmail, entities);
+    }
+
+    @Override
+    public boolean existsByUserMailAndCompanyIds(String userEmail, List<Long> companyIds) {
+        return repository.existsByUserEmailAndCompanyIdIn(userEmail, companyIds);
     }
 }
