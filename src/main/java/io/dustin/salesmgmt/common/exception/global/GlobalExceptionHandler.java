@@ -2,17 +2,15 @@ package io.dustin.salesmgmt.common.exception.global;
 
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
-import com.fasterxml.jackson.databind.exc.MismatchedInputException;
 import io.dustin.salesmgmt.common.exception.custom.DuplicateCompanyAccessException;
 import io.dustin.salesmgmt.common.exception.custom.InvalidDepartmentException;
 import io.dustin.salesmgmt.common.response.CommonResponse;
-import jakarta.validation.ConstraintViolation;
+import io.dustin.salesmgmt.common.util.SlackNotifier;
 import jakarta.validation.ConstraintViolationException;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
-import org.springframework.validation.BindException;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -20,8 +18,11 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@RequiredArgsConstructor
 @RestControllerAdvice
 public class GlobalExceptionHandler {
+
+    private  final SlackNotifier slackNotifier;
 
     @ExceptionHandler(InvalidDepartmentException.class)
     public ResponseEntity<CommonResponse<Void>> handleInvalidDepartment(InvalidDepartmentException ex) {
@@ -107,7 +108,11 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(Exception.class)
     public ResponseEntity<CommonResponse<Void>> handleException(Exception ex) {
-        ex.printStackTrace(); // 서버 콘솔에 로그 남기기 (디버깅 용)
+        ex.printStackTrace(); // 서버 콘솔에 출력
+
+        // 슬랙으로 에러 알림
+        slackNotifier.send(buildSlackErrorMessage(ex));
+
         return ResponseEntity
                 .status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .body(CommonResponse.of(500, "서버 내부 오류가 발생했습니다.", null));
@@ -122,7 +127,6 @@ public class GlobalExceptionHandler {
     }
 
     /**
-     * JSON Path를 이쁘게 만들어주는 메소드
      * 예: companies[0].companyId
      */
     private String buildFieldPath(List<JsonMappingException.Reference> path) {
@@ -156,6 +160,14 @@ public class GlobalExceptionHandler {
         }
         // 그 외 타입은 그냥 타입명으로
         return "올바른 타입이 아닙니다. 기대 타입: " + targetType.getSimpleName();
+    }
+
+    private String buildSlackErrorMessage(Exception ex) {
+        return """
+                🚨 *500 서버 에러 발생*
+                *예외 타입:* %s
+                *메시지:* %s
+                """.formatted(ex.getClass().getSimpleName(), ex.getMessage() != null ? ex.getMessage() : "No message");
     }
 
 }
