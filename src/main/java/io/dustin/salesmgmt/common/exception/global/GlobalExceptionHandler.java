@@ -2,6 +2,7 @@ package io.dustin.salesmgmt.common.exception.global;
 
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
+import io.dustin.salesmgmt.common.exception.custom.AlreadyRegisteredCompanyException;
 import io.dustin.salesmgmt.common.exception.custom.DuplicateCompanyAccessException;
 import io.dustin.salesmgmt.common.exception.custom.InvalidDepartmentException;
 import io.dustin.salesmgmt.common.response.CommonResponse;
@@ -37,6 +38,14 @@ public class GlobalExceptionHandler {
                 CommonResponse.of(400, ex.getMessage(), null)
         );
     }
+
+    @ExceptionHandler(AlreadyRegisteredCompanyException.class)
+    public ResponseEntity<CommonResponse<Void>> handleAlreadyRegisteredCompanyException(AlreadyRegisteredCompanyException ex) {
+        return ResponseEntity.badRequest().body(
+                CommonResponse.of(400, ex.getMessage(), null)
+        );
+    }
+
 
     @ExceptionHandler(HttpMessageNotReadableException.class)
     public ResponseEntity<CommonResponse<Void>> handleHttpMessageNotReadable(HttpMessageNotReadableException ex) {
