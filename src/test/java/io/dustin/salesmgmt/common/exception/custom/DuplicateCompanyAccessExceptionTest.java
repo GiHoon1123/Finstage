@@ -4,19 +4,24 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.*;
 
-public class InvalidDepartmentExceptionTest extends RuntimeException {
-
+public class DuplicateCompanyAccessExceptionTest extends  RuntimeException {
     @Test
-    @DisplayName("부서명이 잘못되었을 때 올바른 예외를 던지는지 확인한다.")
+    @DisplayName("클라이언트가 중복된 회사를 입력했을 때 예외가 발생하는지 확인한다.")
     void shouldCreateExceptionWithMessage() {
+
         // given
-        String errorMessage = "부서명이 잘못되었습니다.";
+        String errorMessage = "중복된 회사가 존재합니다.";
 
         // when
-        InvalidDepartmentException exception = new InvalidDepartmentException(errorMessage);
+        DuplicateCompanyAccessException exception = new DuplicateCompanyAccessException(errorMessage);
 
         // then
         assertThat(exception).isInstanceOf(RuntimeException.class);
         assertThat(exception.getMessage()).isEqualTo(errorMessage);
+
     }
+
+
+
+
 }
