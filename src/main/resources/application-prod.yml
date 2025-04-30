@@ -1,6 +1,6 @@
 spring:
   application:
-    name: salesmgmt
+    name: finstage
   config:
     import: optional:properties/env-dev.properties
 
