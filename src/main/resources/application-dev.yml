@@ -1,6 +1,8 @@
 spring:
   application:
     name: salesmgmt
+  config:
+    import: optional:properties/env-dev.properties
 
   datasource:
     url: jdbc:mysql://${DB_HOST}:${DB_PORT}/${DB_NAME}
@@ -12,6 +14,10 @@ spring:
     hibernate:
       ddl-auto: update
     show-sql: true
+
+slack:
+  webhook:
+    url: ${SLACK_URL}
 
 springdoc:
   api-docs:

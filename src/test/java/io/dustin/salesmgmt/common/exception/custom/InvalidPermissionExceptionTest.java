@@ -4,19 +4,24 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.*;
 
-public class InvalidDepartmentExceptionTest extends RuntimeException {
+public class InvalidPermissionExceptionTest extends RuntimeException {
 
     @Test
-    @DisplayName("부서명이 잘못되었을 때 올바른 예외를 던지는지 확인한다.")
+    @DisplayName("유효하지 않은 권한을 입력했을 때 올바른 예외를 던지는지 확인한다.")
     void shouldCreateExceptionWithMessage() {
         // given
-        String errorMessage = "부서명이 잘못되었습니다.";
+        String errorMessage = "유효하지 않은 권한입니다.";
 
         // when
-        InvalidDepartmentException exception = new InvalidDepartmentException(errorMessage);
+        InvalidPermissionException exception = new InvalidPermissionException(errorMessage);
 
         // then
         assertThat(exception).isInstanceOf(RuntimeException.class);
         assertThat(exception.getMessage()).isEqualTo(errorMessage);
+
+
+
+
+
     }
 }
