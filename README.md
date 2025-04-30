@@ -1,34 +1,55 @@
-# Salesmgmt
+# Finstage
 
 ## Introduction
 
-**Salesmgmt** is a Java-based project that simulates a company’s internal sales management system.  
-It was developed primarily as a **practice environment for migrating legacy internal systems to a modern Java architecture**.
+**Finstage** is a Java-based financial intelligence platform that supports individual investors by providing access to financial statements, AI-based stock price prediction, and actual vs. predicted stock chart comparison.
 
-While the system provides features for managing and tracking company revenue, its core purpose is to explore modular system design, clean architecture principles, and integration with real-world technologies.
+The system is built as a **realistic MVP prototype** to validate investment-related feature ideas and learn how to structure scalable backend systems in Java.
+
+While the long-term goal includes features like virtual investment and paid user plans, the current version focuses on delivering a **minimal but functional experience for investment analysis**.
 
 ## Purpose
 
-- Practice migrating internal systems to a modern Java stack.
-- Design a maintainable, testable system using **Hexagonal Architecture**.
-- Simulate sales data management with realistic business logic.
-- Integrate essential backend technologies including **Spring Boot**, **JPA**, and **OpenAPI**.
+- Provide realistic financial data visualizations for public companies.
+- Enable stock price predictions based on fixed external variables.
+- Allow users to compare predicted prices with real market data.
+- Practice building scalable, testable systems using **Hexagonal Architecture**.
+- Lay the foundation for a future **freemium SaaS financial service**.
 
 ## Architecture
 
-The project is structured based on the **Hexagonal Architecture** (also known as Ports and Adapters), which emphasizes the separation of business logic from external concerns such as databases and web frameworks.
+The project follows the **Hexagonal Architecture** (a.k.a. Ports and Adapters), which cleanly separates domain logic from infrastructure and UI.
 
 ### Key Layers:
 
-- **Domain Layer**: Contains core business logic and domain models.
+- **Domain Layer**: Core business rules (e.g. user limitations, prediction context).
+- **Application Layer**: Use case orchestration and validation.
+- **Adapters (Ports)**: Interfaces to database, web, or external APIs.
 
+This architecture promotes high testability, clear responsibilities, and long-term maintainability.
 
-- **Application Layer**: Defines use cases and coordinates interactions between domain and external systems.
+## Currently Available Features
 
+### ✅ Financial Statement Viewer
+- View static financial data (e.g. sales, operating profit, ROE).
+- Accessible for all users, no login required.
 
-- **Adapters (Ports)**: Implement external interactions like databases, APIs, or UI without affecting the domain logic.
+### ✅ Stock Price Prediction (AI)
+- Predict future prices of selected companies using predefined external variables.
+- Initial model: Simple linear regression.
 
-This architectural style makes the system modular, easier to test, and flexible to change.
+### ✅ Real vs. Predicted Chart
+- Overlay prediction results with recent actual stock prices.
+- Helps users visually assess prediction reliability.
+
+### ✅ Company Prediction Limitation (Freemium Logic)
+- Registered users can choose up to **3 companies** for prediction.
+- This limit simulates future upgrade logic for tiered subscription.
+
+### ✅ User Authentication
+- Basic email + password registration and login (JWT based or Firebase-ready).
+
+> ❌ *Virtual investment and portfolio tracking are excluded from MVP.*
 
 ## Getting Started
 
