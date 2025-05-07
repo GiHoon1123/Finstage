@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import io.dustin.finstage.common.exception.custom.AlreadyRegisteredCompanyException;
 import io.dustin.finstage.common.exception.custom.DuplicateCompanyAccessException;
+import io.dustin.finstage.common.exception.custom.FinancialStatementNotFoundException;
 import io.dustin.finstage.common.exception.custom.InvalidDepartmentException;
 import io.dustin.finstage.common.response.CommonResponse;
 import io.dustin.finstage.common.util.SlackNotifier;
@@ -24,6 +25,13 @@ import java.util.stream.Collectors;
 public class GlobalExceptionHandler {
 
     private  final SlackNotifier slackNotifier;
+
+    @ExceptionHandler(FinancialStatementNotFoundException.class)
+    public ResponseEntity<CommonResponse<Void>> handleFinancialStatementNotFoundException(FinancialStatementNotFoundException ex) {
+        return ResponseEntity.badRequest().body(
+                CommonResponse.of(400, ex.getMessage(), null)
+        );
+    }
 
     @ExceptionHandler(InvalidDepartmentException.class)
     public ResponseEntity<CommonResponse<Void>> handleInvalidDepartment(InvalidDepartmentException ex) {
