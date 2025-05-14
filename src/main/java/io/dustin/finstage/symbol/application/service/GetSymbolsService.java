@@ -1,4 +1,4 @@
-package io.dustin.finstage.symbol.application.port.service;
+package io.dustin.finstage.symbol.application.service;
 
 import io.dustin.finstage.common.annotation.UseCase;
 import io.dustin.finstage.common.response.PagedResponse;

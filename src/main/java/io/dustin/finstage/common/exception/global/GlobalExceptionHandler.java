@@ -2,10 +2,7 @@ package io.dustin.finstage.common.exception.global;
 
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
-import io.dustin.finstage.common.exception.custom.AlreadyRegisteredCompanyException;
-import io.dustin.finstage.common.exception.custom.DuplicateCompanyAccessException;
-import io.dustin.finstage.common.exception.custom.FinancialStatementNotFoundException;
-import io.dustin.finstage.common.exception.custom.InvalidDepartmentException;
+import io.dustin.finstage.common.exception.custom.*;
 import io.dustin.finstage.common.response.CommonResponse;
 import io.dustin.finstage.common.util.SlackNotifier;
 import jakarta.validation.ConstraintViolationException;
@@ -28,6 +25,13 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(FinancialStatementNotFoundException.class)
     public ResponseEntity<CommonResponse<Void>> handleFinancialStatementNotFoundException(FinancialStatementNotFoundException ex) {
+        return ResponseEntity.badRequest().body(
+                CommonResponse.of(400, ex.getMessage(), null)
+        );
+    }
+
+    @ExceptionHandler(InvalidScoreException.class)
+    public ResponseEntity<CommonResponse<Void>> handleInvalidScoreException(InvalidScoreException ex) {
         return ResponseEntity.badRequest().body(
                 CommonResponse.of(400, ex.getMessage(), null)
         );
