@@ -20,14 +20,29 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/authorization/company-access")
-@Tag(name = "회사 접근 권한", description = "유저의 회사 접근 권한을 등록하는 API")
 public class RegisterCompanyAccessController {
 
     private final RegisterCompanyAccessUseCase registerCompanyAccessUseCase;
 
     @Operation(
-            summary = "회사 접근 권한 등록",
-            description = "유저의 이메일, 이름과 접근할 회사 목록을 받아 등록합니다."
+            summary = "Register company access permissions for a user",
+            description = """
+        Registers company access permissions for a user.
+
+        This API receives a user's email, name, and a list of company IDs the user is allowed to access.
+
+        - The request body must be in JSON format.
+        - You can register access to multiple companies at once.
+        - If a company access entry already exists for the user, it will be ignored (no duplication error).
+
+        Example request:
+
+        {
+          "email": "user@example.com",
+          "name": "John Doe",
+          "companyIds": [101, 102, 103]
+        }
+        """
     )
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "등록 성공"),
