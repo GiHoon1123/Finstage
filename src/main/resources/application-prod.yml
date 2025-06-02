@@ -42,7 +42,7 @@ springdoc:
     tags-sorter: alpha
     operations-sorter: method
     doc-expansion: none
-    path: /api
+    path: /docs
     tag-sorter: alpha
     display-request-duration: true
 

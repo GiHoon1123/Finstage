@@ -100,6 +100,6 @@ To compile and package the application:
 Once the application is running, Swagger UI is available at:
 
 ```
-http://localhost:8080/salesmgmt/v1/api-docs
+http://localhost:8080/docs
 ```
 
