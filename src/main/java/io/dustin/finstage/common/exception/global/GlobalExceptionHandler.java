@@ -26,6 +26,17 @@ public class GlobalExceptionHandler {
 //    private  final SlackNotifier slackNotifier;
 
 
+    /**
+     * 지금은 간단하게 IllegalArgumentException로 잡음 추후 커스텀 예외 고려
+     */
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<CommonResponse<Void>> handleIllegalArgumentException(IllegalArgumentException ex) {
+        return ResponseEntity
+                .badRequest()
+                .body(CommonResponse.of(400, ex.getMessage()));
+    }
+
+
     @ExceptionHandler(HttpClientErrorException.class)
     public ResponseEntity<CommonResponse<Void>> handleHttpClientError(HttpClientErrorException ex) {
         String message;
