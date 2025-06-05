@@ -1,6 +1,7 @@
 package io.dustin.finstage.common.response;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
@@ -14,6 +15,7 @@ public class CommonResponse<T> {
     private final String message;
     private final T data;
 
+    @Schema(hidden = true)
     @JsonInclude(JsonInclude.Include.NON_NULL) // null이면 JSON 응답에서 아예 제외
     private final List<ValidationError> errors; // 에러 리스트 추가
 

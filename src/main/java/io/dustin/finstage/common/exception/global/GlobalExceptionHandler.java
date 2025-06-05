@@ -1,8 +1,9 @@
 package io.dustin.finstage.common.exception.global;
 
 import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
-import io.dustin.finstage.common.exception.custom.*;
 import io.dustin.finstage.common.response.CommonResponse;
 import io.dustin.finstage.common.util.SlackNotifier;
 import jakarta.validation.ConstraintViolationException;
@@ -13,6 +14,7 @@ import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.client.HttpClientErrorException;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -21,41 +23,26 @@ import java.util.stream.Collectors;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
-    private  final SlackNotifier slackNotifier;
+//    private  final SlackNotifier slackNotifier;
 
-    @ExceptionHandler(FinancialStatementNotFoundException.class)
-    public ResponseEntity<CommonResponse<Void>> handleFinancialStatementNotFoundException(FinancialStatementNotFoundException ex) {
-        return ResponseEntity.badRequest().body(
-                CommonResponse.of(400, ex.getMessage(), null)
-        );
-    }
 
-    @ExceptionHandler(InvalidScoreException.class)
-    public ResponseEntity<CommonResponse<Void>> handleInvalidScoreException(InvalidScoreException ex) {
-        return ResponseEntity.badRequest().body(
-                CommonResponse.of(400, ex.getMessage(), null)
-        );
-    }
+    @ExceptionHandler(HttpClientErrorException.class)
+    public ResponseEntity<CommonResponse<Void>> handleHttpClientError(HttpClientErrorException ex) {
+        String message;
+        try {
+            JsonNode json = new ObjectMapper().readTree(ex.getResponseBodyAsString());
+            message = json.path("detail").get(0).path("msg").asText("외부 요청 오류");
+        } catch (Exception e) {
+            message = "외부 API 요청 오류: " + ex.getStatusText();
+        }
 
-    @ExceptionHandler(InvalidDepartmentException.class)
-    public ResponseEntity<CommonResponse<Void>> handleInvalidDepartment(InvalidDepartmentException ex) {
-        return ResponseEntity.badRequest().body(
-                CommonResponse.of(400, ex.getMessage(), null)
-        );
-    }
-
-    @ExceptionHandler(DuplicateCompanyAccessException.class)
-    public ResponseEntity<CommonResponse<Void>> handleDuplicateCompanyAccessException(DuplicateCompanyAccessException ex) {
-        return ResponseEntity.badRequest().body(
-                CommonResponse.of(400, ex.getMessage(), null)
-        );
-    }
-
-    @ExceptionHandler(AlreadyRegisteredCompanyException.class)
-    public ResponseEntity<CommonResponse<Void>> handleAlreadyRegisteredCompanyException(AlreadyRegisteredCompanyException ex) {
-        return ResponseEntity.badRequest().body(
-                CommonResponse.of(400, ex.getMessage(), null)
-        );
+        return ResponseEntity
+                .status(ex.getStatusCode())
+                .body(CommonResponse.of(
+                        ex.getStatusCode().value(),
+                        message,
+                        null
+                ));
     }
 
 
@@ -132,7 +119,7 @@ public class GlobalExceptionHandler {
         ex.printStackTrace(); // 서버 콘솔에 출력
 
         // 슬랙으로 에러 알림
-        slackNotifier.send(buildSlackErrorMessage(ex));
+//        slackNotifier.send(buildSlackErrorMessage(ex));
 
         return ResponseEntity
                 .status(HttpStatus.INTERNAL_SERVER_ERROR)
