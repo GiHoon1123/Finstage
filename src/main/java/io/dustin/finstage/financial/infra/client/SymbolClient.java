@@ -4,9 +4,6 @@ import io.dustin.finstage.common.annotation.ExternalClient;
 import io.dustin.finstage.common.http.HttpClient;
 import io.dustin.finstage.financial.dto.ExternalSymbolListResponse;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Component;
-import org.springframework.web.client.RestTemplate;
-
 @ExternalClient
 @RequiredArgsConstructor
 public class SymbolClient {
