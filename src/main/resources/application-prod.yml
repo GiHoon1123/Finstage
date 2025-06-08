@@ -17,17 +17,21 @@ spring:
     show-sql: true
 
   kafka:
-    bootstrap-servers: {KAFKA_HOST}
+    bootstrap-servers: ${KAFKA_HOST}
     producer:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
     consumer:
-      group-id: {CONSUMER_GROUP_ID}
+      group-id: ${CONSUMER_GROUP_ID}
       auto-offset-reset: earliest
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
       properties:
         spring.json.trusted.packages: "*"
+
+
+jwt:
+  secret: ${JWT_SECRET}
 
 slack:
   webhook:
